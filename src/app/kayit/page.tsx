@@ -1,6 +1,32 @@
+"use client";
+
+import { registerUser } from "@/lib/actions";
 import Link from "next/link";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Kayit() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    const formData = new FormData(e.currentTarget);
+    
+    const result = await registerUser(formData);
+
+    if (result.error) {
+      setError(result.error);
+      setLoading(false);
+    } else {
+      router.push("/giris?registered=true");
+    }
+  };
+
   return (
     <main className="min-h-screen bg-[#0a0a0f] text-white flex items-center justify-center px-6 py-12">
       <div className="w-full max-w-md">
@@ -22,12 +48,21 @@ export default function Kayit() {
           <p className="text-neutral-400">Kariyerini dönüştürmeye başla</p>
         </div>
 
-        <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+        {error && (
+          <div className="mb-4 p-3 bg-red-500/10 border border-red-500/50 rounded-lg text-red-400 text-sm text-center">
+            {error}
+          </div>
+        )}
+
+        <form className="space-y-4" onSubmit={handleSubmit}>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm text-neutral-400 mb-2">Ad</label>
               <input 
+                name="name"
                 type="text" 
+                required
+                minLength={2}
                 placeholder="Adın"
                 className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-cyan-500 focus:outline-none text-white placeholder:text-neutral-500"
               />
@@ -35,7 +70,10 @@ export default function Kayit() {
             <div>
               <label className="block text-sm text-neutral-400 mb-2">Soyad</label>
               <input 
+                name="surname"
                 type="text" 
+                required
+                minLength={2}
                 placeholder="Soyadın"
                 className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-cyan-500 focus:outline-none text-white placeholder:text-neutral-500"
               />
@@ -45,7 +83,9 @@ export default function Kayit() {
           <div>
             <label className="block text-sm text-neutral-400 mb-2">E-posta</label>
             <input 
+              name="email"
               type="email" 
+              required
               placeholder="ornek@email.com"
               className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-cyan-500 focus:outline-none text-white placeholder:text-neutral-500"
             />
@@ -54,7 +94,10 @@ export default function Kayit() {
           <div>
             <label className="block text-sm text-neutral-400 mb-2">Şifre</label>
             <input 
+              name="password"
               type="password" 
+              required
+              minLength={8}
               placeholder="En az 8 karakter"
               className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-cyan-500 focus:outline-none text-white placeholder:text-neutral-500"
             />
@@ -63,19 +106,25 @@ export default function Kayit() {
           <div>
             <label className="block text-sm text-neutral-400 mb-2">Şifre Tekrar</label>
             <input 
+              name="confirmPassword"
               type="password" 
+              required
+              minLength={8}
               placeholder="Şifreni tekrar gir"
               className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-cyan-500 focus:outline-none text-white placeholder:text-neutral-500"
             />
           </div>
 
           <label className="flex items-start gap-3 text-sm text-neutral-400">
-            <input type="checkbox" className="mt-1 w-4 h-4 rounded bg-white/5" />
+            <input type="checkbox" required className="mt-1 w-4 h-4 rounded bg-white/5" />
             <span>Kullanım şartları ve gizlilik politikasını kabul ediyorum</span>
           </label>
 
-          <button className="w-full py-4 bg-white text-black font-semibold rounded-xl hover:scale-[1.02] transition-transform">
-            Kayıt Ol
+          <button 
+            disabled={loading}
+            className="w-full py-4 bg-white text-black font-semibold rounded-xl hover:scale-[1.02] transition-transform disabled:opacity-50"
+          >
+            {loading ? "Kayıt yapılıyor..." : "Kayıt Ol"}
           </button>
         </form>
 

@@ -1,6 +1,38 @@
+"use client";
+
+import { signIn } from "next-auth/react";
 import Link from "next/link";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Giris() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+
+    const result = await signIn("credentials", {
+      email,
+      password,
+      redirect: false,
+    });
+
+    if (result?.error) {
+      setError("E-posta veya şifre hatalı");
+      setLoading(false);
+    } else {
+      router.push("/dashboard");
+    }
+  };
+
   return (
     <main className="min-h-screen bg-[#0a0a0f] text-white flex items-center justify-center px-6">
       <div className="w-full max-w-md">
@@ -22,11 +54,19 @@ export default function Giris() {
           <p className="text-neutral-400">Devam etmek için giriş yap</p>
         </div>
 
-        <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+        {error && (
+          <div className="mb-4 p-3 bg-red-500/10 border border-red-500/50 rounded-lg text-red-400 text-sm text-center">
+            {error}
+          </div>
+        )}
+
+        <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
             <label className="block text-sm text-neutral-400 mb-2">E-posta</label>
             <input 
+              name="email"
               type="email" 
+              required
               placeholder="ornek@email.com"
               className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-cyan-500 focus:outline-none text-white placeholder:text-neutral-500"
             />
@@ -35,7 +75,9 @@ export default function Giris() {
           <div>
             <label className="block text-sm text-neutral-400 mb-2">Şifre</label>
             <input 
+              name="password"
               type="password" 
+              required
               placeholder="••••••••"
               className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-cyan-500 focus:outline-none text-white placeholder:text-neutral-500"
             />
@@ -49,8 +91,11 @@ export default function Giris() {
             <span className="text-sm text-cyan-400 cursor-pointer">Şifremi unuttum</span>
           </div>
 
-          <button className="w-full py-4 bg-white text-black font-semibold rounded-xl hover:scale-[1.02] transition-transform">
-            Giriş Yap
+          <button 
+            disabled={loading}
+            className="w-full py-4 bg-white text-black font-semibold rounded-xl hover:scale-[1.02] transition-transform disabled:opacity-50"
+          >
+            {loading ? "Giriş yapılıyor..." : "Giriş Yap"}
           </button>
         </form>
 

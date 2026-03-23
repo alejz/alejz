@@ -12,6 +12,8 @@
 - [x] CQ1 v2 - UI/UX redesign with custom logo, typography, modern aesthetics
 - [x] CQ1 v3 - Added Login/Register buttons, improved hover effects, floating animations, "Hazır mısın?" CTA section
 - [x] Database - Drizzle ORM + SQLite with users, skills, tasks, achievements, career_goals tables
+- [x] Security - Zod validation, password strength, input sanitization, security headers, rate limiting
+- [x] Auth - NextAuth with credentials provider, bcrypt password hashing, JWT sessions, protected routes
 - [x] Typecheck and lint passes
 
 ## Session History
@@ -31,16 +33,25 @@
 - TypeScript
 - Bun package manager
 - **Drizzle ORM** + SQLite (database)
+- **NextAuth** v5 (authentication)
+- **bcryptjs** (password hashing)
 
 ## Database Schema
 
 | Table | Columns |
 |-------|---------|
-| users | id, name, surname, email, password, level, xp, token, createdAt, updatedAt |
+| users | id, name, surname, email, password, level, xp, token, emailVerified, isActive, lastLoginAt, passwordResetToken, passwordResetExpires, createdAt, updatedAt |
 | skills | id, userId, name, category, level, progress |
 | tasks | id, userId, title, description, xpReward, tokenReward, status, completedAt, createdAt |
 | achievements | id, userId, name, description, unlockedAt |
 | career_goals | id, userId, title, targetRole, status, createdAt |
+
+## Auth Setup
+
+- `/api/auth/[...nextauth]` - NextAuth API routes
+- `/src/auth/index.ts` - Auth configuration with credentials provider
+- `/src/lib/actions.ts` - Server actions for registration
+- `/src/middleware.ts` - Protected routes (dashboard, redirect logged-in users from login/register)
 
 ## Landing Page v3 Design
 
