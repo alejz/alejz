@@ -3,11 +3,6 @@
 export default function Dashboard() {
   return (
     <main className="min-h-screen bg-[#0a0a0f] text-white">
-      <style jsx>{`
-        .font-sans { font-family: var(--font-jakarta), system-ui, sans-serif; }
-        .font-display { font-family: var(--font-outfit), system-ui, sans-serif; }
-      `}</style>
-
       <nav className="border-b border-white/5">
         <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
           <div className="flex items-center gap-3">

@@ -5,17 +5,6 @@ import Link from "next/link";
 export default function Giris() {
   return (
     <main className="min-h-screen bg-[#0a0a0f] text-white flex items-center justify-center px-6">
-      <style jsx>{`
-        .font-sans { font-family: var(--font-jakarta), system-ui, sans-serif; }
-        .font-display { font-family: var(--font-outfit), system-ui, sans-serif; }
-        .gradient-text {
-          background: linear-gradient(135deg, #22d3ee 0%, #a855f7 50%, #ec4899 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-        }
-      `}</style>
-
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center gap-2 mb-8">
