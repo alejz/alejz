@@ -3,38 +3,6 @@
 export default function Home() {
   return (
     <main className="min-h-screen bg-[#0a0a0f] text-white font-sans overflow-x-hidden">
-      <style jsx>{`
-        .font-sans { font-family: var(--font-jakarta), system-ui, sans-serif; }
-        .font-display { font-family: var(--font-outfit), system-ui, sans-serif; }
-        .gradient-text {
-          background: linear-gradient(135deg, #22d3ee 0%, #a855f7 50%, #ec4899 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-        }
-        @keyframes float-slow {
-          0%, 100% { transform: translateY(0) rotate(0deg); }
-          50% { transform: translateY(-20px) rotate(5deg); }
-        }
-        @keyframes pulse-glow {
-          0%, 100% { opacity: 0.5; transform: scale(1); }
-          50% { opacity: 1; transform: scale(1.1); }
-        }
-        @keyframes float-xy {
-          0%, 100% { transform: translate(0, 0); }
-          25% { transform: translate(10px, -10px); }
-          50% { transform: translate(-5px, 15px); }
-          75% { transform: translate(-15px, -5px); }
-        }
-        .animate-float-slow { animation: float-slow 8s ease-in-out infinite; }
-        .animate-pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
-        .animate-float-xy { animation: float-xy 12s ease-in-out infinite; }
-        .card-glow:hover {
-          box-shadow: 0 0 40px -10px rgba(34, 211, 238, 0.3);
-          border-color: rgba(34, 211, 238, 0.3);
-        }
-      `}</style>
-
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 -left-20 w-72 h-72 bg-cyan-500/10 rounded-full blur-3xl animate-float-xy"></div>
         <div className="absolute bottom-40 -right-20 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-float-xy delay-[-4s]"></div>
