@@ -3,7 +3,7 @@
 ## Current State
 
 **Project**: CareerQuest Landing Website
-**Status**: ✅ UI/UX redesign complete - v3
+**Status**: ✅ Database added
 
 ## Recently Completed
 
@@ -11,6 +11,7 @@
 - [x] CQ1 - Initial landing page with hero, features, CTA sections
 - [x] CQ1 v2 - UI/UX redesign with custom logo, typography, modern aesthetics
 - [x] CQ1 v3 - Added Login/Register buttons, improved hover effects, floating animations, "Hazır mısın?" CTA section
+- [x] Database - Drizzle ORM + SQLite with users, skills, tasks, achievements, career_goals tables
 - [x] Typecheck and lint passes
 
 ## Session History
@@ -29,6 +30,17 @@
 - Tailwind CSS 4
 - TypeScript
 - Bun package manager
+- **Drizzle ORM** + SQLite (database)
+
+## Database Schema
+
+| Table | Columns |
+|-------|---------|
+| users | id, name, surname, email, password, level, xp, token, createdAt, updatedAt |
+| skills | id, userId, name, category, level, progress |
+| tasks | id, userId, title, description, xpReward, tokenReward, status, completedAt, createdAt |
+| achievements | id, userId, name, description, unlockedAt |
+| career_goals | id, userId, title, targetRole, status, createdAt |
 
 ## Landing Page v3 Design
 
