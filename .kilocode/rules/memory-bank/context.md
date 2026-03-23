@@ -18,6 +18,7 @@
 - [x] Password Reset - Token-based reset, /sifre-sifirla page, reset email
 - [x] Email Service - Nodemailer integration with templates
 - [x] Admin Panel - User list, basic management (admin@careerquest.com only)
+- [x] Dashboard - Dynamic data fetching + interactivity (görev tamamlama, XP/token artışı)
 - [x] Typecheck and lint passes
 
 ## Session History
