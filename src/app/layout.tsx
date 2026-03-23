@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Next.js Template",
-  description: "A minimal Next.js starter template",
+  title: "CareerQuest - Akıllı Kariyer Gelişim Sistemi",
+  description: "Kariyerini anlayan, geliştiren ve yönlendiren akıllı bir karar ve gelişim sistemi",
 };
 
 export default function RootLayout({
