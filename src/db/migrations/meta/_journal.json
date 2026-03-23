@@ -22,6 +22,13 @@
       "when": 1774302314107,
       "tag": "0002_square_sentinels",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1774303017689,
+      "tag": "0003_chief_mikhail_rasputin",
+      "breakpoints": true
     }
   ]
 }

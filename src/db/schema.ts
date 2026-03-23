@@ -59,3 +59,40 @@ export const careerGoals = sqliteTable("career_goals", {
   status: text("status").default("active"),
   createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
 });
+
+export const professions = sqliteTable("professions", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  name: text("name").notNull(),
+  category: text("category").notNull(),
+  description: text("description"),
+  icon: text("icon"),
+  difficulty: text("difficulty").default("beginner"),
+  createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+});
+
+export const professionTasks = sqliteTable("profession_tasks", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  professionId: integer("profession_id").references(() => professions.id).notNull(),
+  title: text("title").notNull(),
+  description: text("description"),
+  taskType: text("task_type").notNull(),
+  difficulty: text("difficulty").notNull(),
+  xpReward: integer("xp_reward").notNull(),
+  tokenReward: integer("token_reward").notNull(),
+  category: text("category"),
+  prerequisites: text("prerequisites"),
+  isActive: integer("is_active", { mode: "boolean" }).default(true),
+  createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+});
+
+export const userTaskSubmissions = sqliteTable("user_task_submissions", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  taskId: integer("task_id").references(() => professionTasks.id).notNull(),
+  submissionText: text("submission_text"),
+  submissionUrl: text("submission_url"),
+  aiFeedback: text("ai_feedback"),
+  isCorrect: integer("is_correct", { mode: "boolean" }),
+  evaluatedAt: integer("evaluated_at", { mode: "timestamp" }),
+  createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+});

@@ -22,6 +22,14 @@
 - [x] Profil sayfası - Düzenleme, istatistikler, beceriler, rozetler
 - [x] Dashboard - Rozetler bölümü eklendi
 - [x] Users tablosuna age, profession, bio alanları eklendi (migration)
+- [x] Meslekler ve görevler sistemi:
+  - 30 meslek (Frontend, Backend, UI/UX, SEO, vb.)
+  - 43 görev (learning, practice, homework, quiz tipleri)
+  - Zorluk seviyeleri (kolay, orta, zor, extreme)
+  - XP ve token ödülleri
+- [x] AI değerlendirme sistemi (simulated)
+- [x] /gorevler sayfası - meslek seçimi ve görev listesi
+- [x] /gorevler/[id] - görev detay ve tamamlama
 - [x] Typecheck and lint passes
 
 ## Session History
