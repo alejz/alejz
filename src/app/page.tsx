@@ -64,8 +64,8 @@ export default function Home() {
           </div>
 
           <div className="flex items-center gap-3">
-            <a href="#" className="px-4 py-2 text-sm text-neutral-300 hover:text-white font-medium transition-colors">Giriş Yap</a>
-            <a href="#" className="px-5 py-2.5 bg-white text-black text-sm font-semibold rounded-full hover:scale-105 transition-transform">
+            <a href="/giris" className="px-4 py-2 text-sm text-neutral-300 hover:text-white font-medium transition-colors">Giriş Yap</a>
+            <a href="/kayit" className="px-5 py-2.5 bg-white text-black text-sm font-semibold rounded-full hover:scale-105 transition-transform">
               Kayıt Ol
             </a>
           </div>
@@ -88,7 +88,7 @@ export default function Home() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-6">
-            <a href="#" className="px-8 py-4 bg-white text-black font-semibold rounded-full hover:scale-105 transition-transform flex items-center gap-2">
+            <a href="/dashboard" className="px-8 py-4 bg-white text-black font-semibold rounded-full hover:scale-105 transition-transform flex items-center gap-2">
               Hemen Başla
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -97,7 +97,7 @@ export default function Home() {
           </div>
           
           <p className="text-neutral-500 text-sm">
-            Zaten hesabın var mı? <a href="#" className="text-cyan-400 hover:underline">Giriş yap</a>
+            Zaten hesabın var mı? <a href="/giris" className="text-cyan-400 hover:underline">Giriş yap</a>
           </p>
         </div>
 
@@ -222,7 +222,7 @@ export default function Home() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="#" className="px-8 py-4 bg-white text-black font-semibold rounded-full hover:scale-105 transition-transform">
+            <a href="/kayit" className="px-8 py-4 bg-white text-black font-semibold rounded-full hover:scale-105 transition-transform">
               Kayıt Ol
             </a>
             <a href="#" className="px-8 py-4 text-neutral-400 hover:text-white font-medium transition-colors">
