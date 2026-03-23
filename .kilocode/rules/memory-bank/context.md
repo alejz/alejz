@@ -3,13 +3,14 @@
 ## Current State
 
 **Project**: CareerQuest Landing Website
-**Status**: ✅ UI/UX redesign complete - v2
+**Status**: ✅ UI/UX redesign complete - v3
 
 ## Recently Completed
 
 - [x] Base Next.js 16 + React 19 + Tailwind CSS 4 setup
 - [x] CQ1 - Initial landing page with hero, features, CTA sections
 - [x] CQ1 v2 - UI/UX redesign with custom logo, typography, modern aesthetics
+- [x] CQ1 v3 - Added Login/Register buttons, improved hover effects, floating animations, "Hazır mısın?" CTA section
 - [x] Typecheck and lint passes
 
 ## Session History
@@ -19,6 +20,7 @@
 | Initial | Next.js starter template created |
 | CQ1 | CareerQuest landing page built (basic) |
 | CQ1 v2 | UI/UX redesign: custom logo (geometric diamond), Outfit + Jakarta Sans fonts, gradient accents, blur effects, floating animations, modern dark theme |
+| CQ1 v3 | Added navbar Login/Register, "Hemen Başla" CTA, floating background orbs animation, card glow hover effects, removed "Nasıl Çalışır" step section |
 
 ## Technical Stack
 
@@ -28,7 +30,7 @@
 - TypeScript
 - Bun package manager
 
-## Landing Page v2 Design
+## Landing Page v3 Design
 
 ### Typography
 - **Display Font**: Outfit (headings, logo) - modern, geometric
@@ -36,12 +38,11 @@
 
 ### Logo
 - Custom geometric diamond shape with gradient (cyan → purple)
-- 3D layered octahedron effect
 
 ### Visual Effects
-- Floating background orbs (cyan, purple)
+- Floating background orbs (cyan, purple) with XY animation
 - Gradient text for accent words
-- Glow effects on cards
+- Card glow on hover
 - Smooth hover animations with scale transforms
 - Glassmorphism navigation
 
@@ -52,19 +53,19 @@
 - Pink accent: `#ec4899`
 - Text: White / Neutral-400
 
-### Sections (v2)
-1. **Navigation** - Fixed, glassmorphism, logo + links + CTA
-2. **Hero** - Gradient badge, gradient text, floating effect, 2 CTAs
+### Sections (v3)
+1. **Navigation** - Fixed, glassmorphism, logo + links + Giriş Yap + Kayıt Ol
+2. **Hero** - Gradient badge, gradient text, "Hemen Başla" CTA, "Zaten hesabın var mı? Giriş yap"
 3. **Features** - 3-column cards with icons and gradient backgrounds
-4. **How It Works** - Step-by-step with connecting line
-5. **System Architecture** - Grid of 6 feature cards
-6. **Gamification** - 4-card grid with icons
-7. **CTA** - Email signup with gradient background
-8. **Footer** - Logo + copyright
+4. **Sistem Mimarisi** - Grid of 6 cards with emojis
+5. **Gamification** - 4-card grid with icons
+6. **CTA** - "Hazır mısın?" + Kayıt Ol / Daha fazla bilgi
+7. **Footer** - Logo + copyright
 
 ## Available Versions
 
 | Version | Description |
 |---------|-------------|
 | CQ1 | Basic landing page |
-| CQ1 v2 | UI/UX redesign - current |
+| CQ1 v2 | UI/UX redesign |
+| CQ1 v3 | Current - with Login/Register buttons, improved animations |
