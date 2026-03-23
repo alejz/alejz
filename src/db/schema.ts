@@ -6,6 +6,9 @@ export const users = sqliteTable("users", {
   surname: text("surname").notNull(),
   email: text("email").notNull().unique(),
   password: text("password").notNull(), // bcrypt hash
+  age: integer("age"),
+  profession: text("profession"),
+  bio: text("bio"),
   emailVerified: integer("email_verified", { mode: "boolean" }).default(false),
   emailVerificationToken: text("email_verification_token"),
   isActive: integer("is_active", { mode: "boolean" }).default(true),

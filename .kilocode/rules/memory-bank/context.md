@@ -19,6 +19,9 @@
 - [x] Email Service - Nodemailer integration with templates
 - [x] Admin Panel - User list, basic management (admin@careerquest.com only)
 - [x] Dashboard - Dynamic data fetching + interactivity (görev tamamlama, XP/token artışı)
+- [x] Profil sayfası - Düzenleme, istatistikler, beceriler, rozetler
+- [x] Dashboard - Rozetler bölümü eklendi
+- [x] Users tablosuna age, profession, bio alanları eklendi (migration)
 - [x] Typecheck and lint passes
 
 ## Session History

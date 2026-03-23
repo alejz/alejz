@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/db";
-import { users, skills, tasks, careerGoals } from "@/db/schema";
+import { users, skills, tasks, careerGoals, achievements } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { auth } from "@/auth";
 
@@ -37,6 +37,11 @@ export async function getDashboardData() {
     .from(careerGoals)
     .where(eq(careerGoals.userId, user.id));
 
+  const userAchievements = await db
+    .select()
+    .from(achievements)
+    .where(eq(achievements.userId, user.id));
+
   const completedTasks = userTasks.filter(t => t.status === "completed").length;
 
   const xpForNextLevel = (user.level || 1) * 500;
@@ -55,6 +60,7 @@ export async function getDashboardData() {
     skills: userSkills,
     tasks: userTasks,
     goals: userGoals,
+    achievements: userAchievements,
     stats: {
       completedTasks,
       xpForNextLevel,

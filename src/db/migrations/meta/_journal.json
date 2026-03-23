@@ -15,6 +15,13 @@
       "when": 1774299608634,
       "tag": "0001_chemical_warstar",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1774302314107,
+      "tag": "0002_square_sentinels",
+      "breakpoints": true
     }
   ]
 }

@@ -27,6 +27,13 @@ interface Goal {
   status: string | null;
 }
 
+interface Achievement {
+  id: number;
+  name: string;
+  description: string | null;
+  unlockedAt: Date | null;
+}
+
 interface DashboardClientProps {
   user: {
     id: number;
@@ -40,6 +47,7 @@ interface DashboardClientProps {
   skills: Skill[];
   tasks: Task[];
   goals: Goal[];
+  achievements: Achievement[];
   stats: {
     completedTasks: number;
     xpForNextLevel: number;
@@ -47,7 +55,7 @@ interface DashboardClientProps {
   };
 }
 
-export default function DashboardClient({ user, skills, tasks, goals, stats }: DashboardClientProps) {
+export default function DashboardClient({ user, skills, tasks, goals, achievements, stats }: DashboardClientProps) {
   const [localTasks, setLocalTasks] = useState(tasks);
   const [localUser, setLocalUser] = useState(user);
   const [localStats, setLocalStats] = useState(stats);
@@ -339,6 +347,23 @@ export default function DashboardClient({ user, skills, tasks, goals, stats }: D
             )}
           </div>
         </div>
+
+        {achievements.length > 0 && (
+          <div className="relative p-6 rounded-2xl bg-gradient-to-br from-white/[0.06] to-white/[0.02] border border-white/10 hover:border-yellow-500/30 transition-all duration-300 group">
+            <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-yellow-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div className="relative z-10">
+              <h2 className="text-xl font-semibold mb-6">Rozetler</h2>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                {achievements.map((achievement) => (
+                  <div key={achievement.id} className="p-4 rounded-xl bg-white/5 border border-white/10 text-center hover:border-yellow-500/30 transition-all">
+                    <div className="text-4xl mb-2">🏆</div>
+                    <div className="font-medium text-sm">{achievement.name}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       <style jsx global>{`

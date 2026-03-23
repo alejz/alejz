@@ -22,6 +22,7 @@ export default async function Dashboard() {
       skills={dashboardData.skills}
       tasks={dashboardData.tasks}
       goals={dashboardData.goals}
+      achievements={dashboardData.achievements}
       stats={dashboardData.stats}
     />
   );
