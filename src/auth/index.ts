@@ -38,18 +38,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           const passwordsMatch = await bcrypt.compare(password, dbUser.password);
           
           if (passwordsMatch) {
-            await db
-              .update(users)
-              .set({ lastLoginAt: new Date() })
-              .where(eq(users.id, dbUser.id));
-            
             return {
               id: dbUser.id.toString(),
               name: `${dbUser.name} ${dbUser.surname}`,
               email: dbUser.email,
-              level: dbUser.level,
-              xp: dbUser.xp,
-              token: dbUser.token,
             };
           }
         }
@@ -62,24 +54,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
-        token.level = (user as any).level;
-        token.xp = (user as any).xp;
-        token.token = (user as any).token;
       }
       return token;
     },
     async session({ session, token }) {
-      if (session.user) {
+      if (session.user && token.id) {
         session.user.id = token.id as string;
-        (session.user as any).level = token.level;
-        (session.user as any).xp = token.xp;
-        (session.user as any).token = token.token;
       }
       return session;
     },
   },
   session: {
     strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60, // 30 days
+    maxAge: 30 * 24 * 60 * 60,
   },
 });
