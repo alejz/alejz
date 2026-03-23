@@ -1,3 +1,5 @@
+"use client";
+
 export default function Dashboard() {
   return (
     <main className="min-h-screen bg-[#0a0a0f] text-white">

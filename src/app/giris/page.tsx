@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+"use client";
+
 export default function Giris() {
   return (
     <main className="min-h-screen bg-[#0a0a0f] text-white flex items-center justify-center px-6">
