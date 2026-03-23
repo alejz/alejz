@@ -191,6 +191,9 @@ export default function Home() {
             <a href="/kayit" className="px-8 py-4 bg-white text-black font-semibold rounded-full hover:scale-105 transition-transform">
               Kayıt Ol
             </a>
+            <a href="#" className="px-8 py-4 text-neutral-400 hover:text-white font-medium transition-colors">
+              Daha fazla bilgi
+            </a>
           </div>
         </div>
       </section>
