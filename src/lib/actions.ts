@@ -3,7 +3,8 @@
 import { db } from "@/db";
 import { users } from "@/db/schema";
 import { registerSchema } from "@/lib/validation";
-import { checkRateLimit } from "@/lib/security";
+import { checkRateLimit, generateSecureToken, hashToken } from "@/lib/security";
+import { sendVerificationEmail, sendWelcomeEmail } from "@/lib/email";
 import bcrypt from "bcryptjs";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
@@ -40,7 +41,9 @@ export async function registerUser(formData: FormData) {
       return { error: "Bu email zaten kayıtlı" };
     }
 
-    const hashedPassword = await bcrypt.hash(data.password, 12);
+    const hashedPassword = await bcrypt.hash(data.password, 10);
+    const token = generateSecureToken(32);
+    const hashedToken = hashToken(token);
 
     const newUser = await db
       .insert(users)
@@ -53,11 +56,14 @@ export async function registerUser(formData: FormData) {
         xp: 0,
         token: 100,
         emailVerified: false,
+        emailVerificationToken: hashedToken,
         isActive: true,
       })
-      .returning({ id: users.id });
+      .returning({ id: users.id, email: users.email });
 
-    return { success: true, userId: newUser[0].id };
+    await sendVerificationEmail(newUser[0].email, token);
+
+    return { success: true, userId: newUser[0].id, needsVerification: true };
   } catch (error) {
     console.error("Register error:", error);
     return { error: "Bir hata oluştu. Lütfen tekrar dene." };

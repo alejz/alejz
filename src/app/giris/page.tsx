@@ -88,7 +88,9 @@ export default function Giris() {
               <input type="checkbox" className="w-4 h-4 rounded bg-white/5" />
               Benı hatırla
             </label>
-            <span className="text-sm text-cyan-400 cursor-pointer">Şifremi unuttum</span>
+            <Link href="/sifre-sifirla" className="text-sm text-cyan-400 hover:underline">
+              Şifremi unuttum
+            </Link>
           </div>
 
           <button 

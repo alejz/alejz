@@ -14,6 +14,10 @@
 - [x] Database - Drizzle ORM + SQLite with users, skills, tasks, achievements, career_goals tables
 - [x] Security - Zod validation, password strength, input sanitization, security headers, rate limiting
 - [x] Auth - NextAuth with credentials provider, bcrypt password hashing, JWT sessions, protected routes
+- [x] Email Verification - Token-based verification, /dogrula page, verification email
+- [x] Password Reset - Token-based reset, /sifre-sifirla page, reset email
+- [x] Email Service - Nodemailer integration with templates
+- [x] Admin Panel - User list, basic management (admin@careerquest.com only)
 - [x] Typecheck and lint passes
 
 ## Session History
