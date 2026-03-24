@@ -11,7 +11,10 @@ const loginSchema = z.object({
   password: z.string().min(1),
 });
 
+const secret = process.env.AUTH_SECRET || "fallback-secret-key-for-development-only";
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  secret,
   pages: {
     signIn: "/giris",
   },
