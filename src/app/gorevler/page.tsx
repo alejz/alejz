@@ -1,85 +1,167 @@
-import { redirect } from "next/navigation";
-import Link from "next/link";
-import { auth } from "@/auth";
+import { useState } from "react";
 
-export default async function TasksPage() {
-  const session = await auth();
-  
-  if (!session?.user) {
-    redirect("/giris");
-  }
+const professions = [
+  { id: 'yazilim', name: 'Yazılım Geliştirici', icon: '💻' },
+  { id: 'tasarim', name: 'UI/UX Tasarımcı', icon: '🎨' },
+  { id: 'pazarlama', name: 'Dijital Pazarlama', icon: '📢' },
+  { id: 'veri', name: 'Veri Analisti', icon: '📊' },
+  { id: 'yapayzeka', name: 'Yapay Zeka Mühendisi', icon: '🤖' },
+  { id: 'icerik', name: 'İçerik Editörü', icon: '✍️' },
+];
 
-  const tasks = [
-    { id: 1, title: "AI Araçlarını Keşfet", description: "En az 3 farklı AI aracını araştır ve özelliklerini yaz", xpReward: 50, tokenReward: 10, difficulty: "kolay", category: "Yapay Zeka" },
-    { id: 2, title: "Kod Yaz", description: "Python veya JavaScript ile basit bir program yaz", xpReward: 100, tokenReward: 25, difficulty: "orta", category: "Yazılım" },
-    { id: 3, title: "Proje Tamamla", description: "Küçük bir tam teşekküllü proje geliştir", xpReward: 200, tokenReward: 50, difficulty: "zor", category: "Proje" },
-    { id: 4, title: "Staj Başvurusu", description: "Bir şirkete staj başvurusu yap", xpReward: 150, tokenReward: 30, difficulty: "orta", category: "Kariyer" },
-    { id: 5, title: "LinkedIn Profil", description: "LinkedIn profilini güncelle", xpReward: 30, tokenReward: 5, difficulty: "kolay", category: "Kariyer" },
-  ];
+const professionTasks: Record<string, { title: string; desc: string; xp: number; token: number; difficulty: string }[]> = {
+  yazilim: [
+    { title: 'GitHub\'da Repo Oluştur', desc: 'İlk repository\'ni oluştur ve paylaş', xp: 50, token: 10, difficulty: 'Kolay' },
+    { title: 'React Komponenti Yaz', desc: 'Fonksiyonel bir React component oluştur', xp: 100, token: 25, difficulty: 'Orta' },
+    { title: 'API Entegrasyonu Yap', desc: 'Bir REST API\'ye bağlan ve veri çek', xp: 150, token: 35, difficulty: 'Orta' },
+    { title: 'Full Stack Proje Yap', desc: 'Frontend + Backend içeren proje geliştir', xp: 300, token: 75, difficulty: 'Zor' },
+  ],
+  tasarim: [
+    { title: 'Figma\'da Tasarım Yap', desc: 'Basit bir UI tasarımı oluştur', xp: 50, token: 10, difficulty: 'Kolay' },
+    { title: 'Prototip Hazırla', desc: 'Interaktif bir prototip yap', xp: 100, token: 25, difficulty: 'Orta' },
+    { title: 'Design System Oluştur', desc: 'Kendi component kütüphaneni yaz', xp: 200, token: 50, difficulty: 'Zor' },
+  ],
+  pazarlama: [
+    { title: 'Sosyal Medya Stratejisi', desc: 'Bir marka için sosyal medya planı hazırla', xp: 50, token: 10, difficulty: 'Kolay' },
+    { title: 'İçerik Takvimi Oluştur', desc: '1 aylık içerik takvimi planla', xp: 100, token: 25, difficulty: 'Orta' },
+    { title: 'Reklam Kampanyası Yönet', desc: 'Google/Facebook ads kampanyası kur', xp: 200, token: 50, difficulty: 'Zor' },
+  ],
+  veri: [
+    { title: 'Excel Dashboard Yap', desc: 'Verileri görselleştir', xp: 50, token: 10, difficulty: 'Kolay' },
+    { title: 'SQL Sorgusu Yaz', desc: 'Veritabanından veri çek', xp: 100, token: 25, difficulty: 'Orta' },
+    { title: 'Veri Görselleştirme', desc: 'Tableau/PowerBI raporu oluştur', xp: 150, token: 35, difficulty: 'Orta' },
+  ],
+  yapayzeka: [
+    { title: 'ChatGPT Prompt Yaz', desc: 'Etkili prompt oluştur', xp: 50, token: 10, difficulty: 'Kolay' },
+    { title: 'Python ile AI Modeli Eğit', desc: 'Basit bir model eğit', xp: 150, token: 35, difficulty: 'Zor' },
+    { title: 'AI Entegrasyonu Yap', desc: 'Uygulamaya AI ekle', xp: 250, token: 60, difficulty: 'Zor' },
+  ],
+  icerik: [
+    { title: 'Blog Yazısı Yaz', desc: 'SEO uyumlu makale yaz', xp: 50, token: 10, difficulty: 'Kolay' },
+    { title: 'Sosyal Medya İçeriği', desc: 'Post/hikaye içeriği hazırla', xp: 75, token: 15, difficulty: 'Kolay' },
+    { title: 'Video Scripti Yaz', desc: 'YouTube/video scripti oluştur', xp: 100, token: 25, difficulty: 'Orta' },
+  ],
+};
 
-  const difficultyColors: any = {
-    kolay: "text-green-400 border-green-500/30",
-    orta: "text-yellow-400 border-yellow-500/30",
-    zor: "text-orange-400 border-orange-500/30",
-  };
+export default function Gorevler() {
+  const [selectedProfession, setSelectedProfession] = useState('yazilim');
+  const tasks = professionTasks[selectedProfession] || [];
 
   return (
-    <main className="min-h-screen bg-[#0a0a0f] text-white">
-      <nav className="border-b border-white/5 backdrop-blur-xl bg-[#0a0a0f]/80 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <Link href="/dashboard" className="flex items-center gap-3 group">
-            <svg width="32" height="32" viewBox="0 0 40 40" fill="none" className="group-hover:scale-110 transition-transform duration-300">
-              <defs>
-                <linearGradient id="dashLogo" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#22d3ee" />
-                  <stop offset="100%" stopColor="#a855f7" />
-                </linearGradient>
-              </defs>
-              <path d="M20 4L36 12V28L20 36L4 28V12L20 4Z" stroke="url(#dashLogo)" strokeWidth="2" fill="none"/>
-              <path d="M20 12L28 16V24L20 28L12 24V16L20 12Z" fill="url(#dashLogo)"/>
-            </svg>
-            <span className="font-bold text-lg">CareerQuest</span>
-          </Link>
-          <div className="flex items-center gap-4">
-            <Link href="/dashboard" className="text-neutral-400 hover:text-white text-sm">Dashboard</Link>
-            <Link href="/profil" className="text-neutral-400 hover:text-white text-sm">Profil</Link>
+    <main style={{ minHeight: '100vh', background: '#0a0a0f', color: '#fff', display: 'flex' }}>
+      {/* Sidebar */}
+      <aside style={{ width: '240px', background: 'rgba(10,10,15,0.95)', borderRight: '1px solid rgba(255,255,255,0.05)', padding: '24px 0', display: 'flex', flexDirection: 'column', position: 'fixed', height: '100vh' }}>
+        <div style={{ padding: '0 24px', marginBottom: '32px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div style={{ width: '36px', height: '36px', background: 'linear-gradient(135deg, #22d3ee, #a855f7)', borderRadius: '10px' }}></div>
+            <span style={{ fontSize: '20px', fontWeight: 700 }}>CareerQuest</span>
           </div>
         </div>
-      </nav>
+        
+        <nav style={{ flex: 1 }}>
+          {[
+            { name: 'Dashboard', icon: '🏠', href: '/dashboard' },
+            { name: 'Görevler', icon: '📋', href: '/gorevler', active: true },
+            { name: 'Profil', icon: '👤', href: '/profil' },
+            { name: 'Ayarlar', icon: '⚙️', href: '#' },
+          ].map((item, i) => (
+            <a key={i} href={item.href}
+              style={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                gap: '12px', 
+                padding: '14px 24px', 
+                color: item.active ? '#22d3ee' : '#a1a1aa', 
+                textDecoration: 'none',
+                background: item.active ? 'rgba(34,211,238,0.05)' : 'transparent',
+                borderLeft: item.active ? '3px solid #22d3ee' : '3px solid transparent',
+              }}>
+              <span>{item.icon}</span>
+              <span style={{ fontSize: '14px', fontWeight: 500 }}>{item.name}</span>
+            </a>
+          ))}
+        </nav>
+        
+        <div style={{ padding: '24px' }}>
+          <button style={{ width: '100%', padding: '12px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#a1a1aa', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+            <span>🚪</span>
+            <span>Çıkış</span>
+          </button>
+        </div>
+      </aside>
 
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        <h1 className="text-3xl font-bold mb-2 bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-          Görevler
-        </h1>
-        <p className="text-neutral-400 mb-8">Görevleri tamamlayarak XP ve token kazan!</p>
+      {/* Main Content */}
+      <div style={{ marginLeft: '240px', flex: 1, padding: '32px 40px' }}>
+        <h1 style={{ fontSize: '32px', fontWeight: 700, marginBottom: '8px' }}>Görevler</h1>
+        <p style={{ color: '#a1a1aa', marginBottom: '32px' }}>Mesleğine özel görevleri tamamla ve ilerle!</p>
 
-        <div className="space-y-4">
-          {tasks.map((task) => (
-            <div key={task.id} className="p-6 rounded-xl bg-white/5 border border-white/10 hover:border-cyan-500/30 transition-all">
-              <div className="flex items-start justify-between">
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className={`px-2 py-0.5 rounded text-xs border ${difficultyColors[task.difficulty]}`}>
-                      {task.difficulty.toUpperCase()}
-                    </span>
-                    <span className="px-2 py-0.5 rounded text-xs bg-purple-500/20 text-purple-400 border border-purple-500/30">
-                      {task.category}
-                    </span>
-                  </div>
-                  <h3 className="font-semibold text-lg">{task.title}</h3>
-                  <p className="text-neutral-400 text-sm mt-1">{task.description}</p>
-                  <div className="flex items-center gap-4 mt-3 text-sm">
-                    <span className="text-purple-400">+{task.xpReward} XP</span>
-                    <span className="text-yellow-400">+{task.tokenReward} Token</span>
-                  </div>
+        {/* Profession Selector */}
+        <div style={{ marginBottom: '32px' }}>
+          <label style={{ display: 'block', fontSize: '14px', color: '#a1a1aa', marginBottom: '12px' }}>Mesleğini Seç</label>
+          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+            {professions.map((prof) => (
+              <button
+                key={prof.id}
+                onClick={() => setSelectedProfession(prof.id)}
+                style={{ 
+                  padding: '12px 20px', 
+                  background: selectedProfession === prof.id ? 'linear-gradient(135deg, #22d3ee, #a855f7)' : 'rgba(255,255,255,0.05)',
+                  border: '1px solid ' + (selectedProfession === prof.id ? 'transparent' : 'rgba(255,255,255,0.1)'),
+                  borderRadius: '12px', 
+                  color: '#fff',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  fontSize: '14px',
+                }}
+              >
+                <span>{prof.icon}</span>
+                <span>{prof.name}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Selected Profession Info */}
+        <div style={{ padding: '20px', background: 'rgba(34,211,238,0.05)', border: '1px solid rgba(34,211,238,0.2)', borderRadius: '16px', marginBottom: '32px', display: 'flex', alignItems: 'center', gap: '16px' }}>
+          <span style={{ fontSize: '32px' }}>{professions.find(p => p.id === selectedProfession)?.icon}</span>
+          <div>
+            <div style={{ fontWeight: 600, marginBottom: '4px' }}>Seçili Meslek: {professions.find(p => p.id === selectedProfession)?.name}</div>
+            <div style={{ fontSize: '14px', color: '#a1a1aa' }}>{tasks.length} görev mevcut</div>
+          </div>
+        </div>
+
+        {/* Tasks */}
+        <div style={{ display: 'grid', gap: '16px' }}>
+          {tasks.map((task, i) => (
+            <div key={i} style={{ padding: '24px', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '16px', transition: 'all 0.2s' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
+                <div>
+                  <h3 style={{ fontSize: '18px', fontWeight: 600, marginBottom: '8px' }}>{task.title}</h3>
+                  <p style={{ color: '#a1a1aa', fontSize: '14px' }}>{task.desc}</p>
                 </div>
-                <button className="ml-4 px-4 py-2 rounded-lg bg-gradient-to-r from-cyan-500 to-purple-500 text-white text-sm font-medium hover:opacity-90">
+                <span style={{ padding: '6px 12px', background: 'rgba(255,255,255,0.05)', borderRadius: '8px', fontSize: '12px', color: '#a1a1aa' }}>{task.difficulty}</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div style={{ display: 'flex', gap: '16px' }}>
+                  <span style={{ color: '#a855f7', fontSize: '14px' }}>+{task.xp} XP</span>
+                  <span style={{ color: '#eab308', fontSize: '14px' }}>+{task.token} Token</span>
+                </div>
+                <button style={{ padding: '10px 20px', background: '#fff', color: '#0a0a0f', border: 'none', borderRadius: '8px', fontWeight: 600, cursor: 'pointer' }}>
                   Başla
                 </button>
               </div>
             </div>
           ))}
         </div>
+
+        {tasks.length === 0 && (
+          <div style={{ textAlign: 'center', padding: '60px', color: '#71717a' }}>
+            <span style={{ fontSize: '48px', display: 'block', marginBottom: '16px' }}>📋</span>
+            Bu meslek için henüz görev yok
+          </div>
+        )}
       </div>
     </main>
   );
