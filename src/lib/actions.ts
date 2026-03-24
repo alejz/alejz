@@ -59,6 +59,6 @@ export async function registerUser(formData: FormData) {
     return { success: true, userId: newUser[0].id };
   } catch (error) {
     console.error("Register error:", error);
-    return { error: "Bir hata oluştu. Lütfen tekrar dene." };
+    return { error: "Bir hata oluştu: " + (error as Error).message };
   }
 }
