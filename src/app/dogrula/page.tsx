@@ -3,9 +3,9 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { verifyEmail } from "@/lib/email-actions";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 
-export default function Dogrula() {
+function DogrulaContent() {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
   const [status, setStatus] = useState<"loading" | "success" | "error" | null>(null);
@@ -136,5 +136,19 @@ export default function Dogrula() {
         </div>
       </div>
     </main>
+  );
+}
+
+export default function Dogrula() {
+  return (
+    <Suspense fallback={
+      <main className="min-h-screen bg-[#0a0a0f] text-white flex items-center justify-center px-6">
+        <div className="w-full max-w-md text-center">
+          <div className="w-12 h-12 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+        </div>
+      </main>
+    }>
+      <DogrulaContent />
+    </Suspense>
   );
 }

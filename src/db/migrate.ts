@@ -1,4 +1,19 @@
-import { runMigrations } from "@kilocode/app-builder-db";
-import { db } from "./index";
+import Database from "better-sqlite3";
+import { readFileSync, readdirSync } from "fs";
+import { join } from "path";
 
-await runMigrations(db, {}, { migrationsFolder: "./src/db/migrations" });
+const db = new Database("data.db");
+
+const migrationsFolder = "./src/db/migrations";
+const files = readdirSync(migrationsFolder)
+  .filter(f => f.endsWith(".sql"))
+  .sort();
+
+for (const file of files) {
+  const sql = readFileSync(join(migrationsFolder, file), "utf-8");
+  console.log(`Running migration: ${file}`);
+  db.exec(sql);
+}
+
+console.log("Migrations completed!");
+db.close();

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { requestPasswordReset, resetPassword } from "@/lib/email-actions";
-import { useState } from "react";
+import { useState, Suspense } from "react";
 
 function RequestForm() {
   const [loading, setLoading] = useState(false);
@@ -165,7 +165,7 @@ function ResetForm({ token }: { token: string }) {
   );
 }
 
-export default function SifreSifirla() {
+function SifreSifirlaContent() {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
 
@@ -208,5 +208,19 @@ export default function SifreSifirla() {
         )}
       </div>
     </main>
+  );
+}
+
+export default function SifreSifirla() {
+  return (
+    <Suspense fallback={
+      <main className="min-h-screen bg-[#0a0a0f] text-white flex items-center justify-center px-6 py-12">
+        <div className="w-full max-w-md text-center">
+          <div className="w-12 h-12 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+        </div>
+      </main>
+    }>
+      <SifreSifirlaContent />
+    </Suspense>
   );
 }
