@@ -1,4 +1,6 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 .font-sans { font-family: var(--font-jakarta), system-ui, sans-serif; }
 .font-display { font-family: var(--font-outfit), system-ui, sans-serif; }
@@ -18,14 +20,30 @@
 @keyframes float-xy {
   0%, 100% { transform: translate(0, 0); }
   25% { transform: translate(10px, -10px); }
-  50% { transform: translate(-5px, 15px); }
-  75% { transform: translate(-15px, -5px); }
+  50% { transform: translate(-10px, 10px); }
+  75% { transform: translate(10px, 10px); }
 }
 
-.animate-pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
-.animate-float-xy { animation: float-xy 12s ease-in-out infinite; }
+.animate-float-xy {
+  animation: float-xy 8s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.delay-\[-4s\] {
+  animation-delay: -4s;
+}
+
+.bg-gradient-radial {
+  background: radial-gradient(circle at center, var(--tw-gradient-stops));
+}
+
+.card-glow {
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.05);
+}
 
 .card-glow:hover {
-  box-shadow: 0 0 40px -10px rgba(34, 211, 238, 0.3);
-  border-color: rgba(34, 211, 238, 0.3);
+  box-shadow: 0 0 30px rgba(34, 211, 238, 0.1);
 }
