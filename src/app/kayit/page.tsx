@@ -8,7 +8,7 @@ export default function Kayit() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     setTimeout(() => {
@@ -18,43 +18,61 @@ export default function Kayit() {
   };
 
   return (
-    <main className="min-h-screen bg-[#0a0a0f] text-white flex items-center justify-center px-6">
-      <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <Link href="/" className="inline-flex items-center gap-2 mb-8">
-            <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-              <defs>
-                <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#22d3ee" />
-                  <stop offset="100%" stopColor="#a855f7" />
-                </linearGradient>
-              </defs>
-              <path d="M20 4L36 12V28L20 36L4 28V12L20 4Z" stroke="url(#logoGrad)" strokeWidth="2" fill="none"/>
-              <path d="M20 12L28 16V24L20 28L12 24V16L20 12Z" fill="url(#logoGrad)"/>
-            </svg>
-            <span className="text-2xl font-bold">CareerQuest</span>
+    <main style={{ minHeight: '100vh', background: '#0a0a0f', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px' }}>
+      <div style={{ width: '100%', maxWidth: '400px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+          <Link href="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', marginBottom: '32px', textDecoration: 'none', color: '#fff' }}>
+            <div style={{ width: '40px', height: '40px', background: 'linear-gradient(135deg, #22d3ee, #a855f7)', borderRadius: '8px' }}></div>
+            <span style={{ fontSize: '24px', fontWeight: 700 }}>CareerQuest</span>
           </Link>
-          <h1 className="text-3xl font-bold mb-2">Hesap Oluştur</h1>
-          <p className="text-neutral-400">Yolculuğuna başla</p>
+          <h1 style={{ fontSize: '32px', fontWeight: 700, marginBottom: '8px' }}>Hesap Oluştur</h1>
+          <p style={{ color: '#a1a1aa' }}>Yolculuğuna başla</p>
         </div>
 
-        <form className="space-y-4" onSubmit={handleSubmit}>
+        <form style={{ display: 'flex', flexDirection: 'column', gap: '16px' }} onSubmit={handleSubmit}>
           <div>
-            <input name="name" type="text" required placeholder="İsim" className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-neutral-500" />
+            <label style={{ display: 'block', fontSize: '14px', color: '#a1a1aa', marginBottom: '8px' }}>İsim</label>
+            <input 
+              name="name"
+              type="text" 
+              required
+              placeholder="Adın"
+              style={{ width: '100%', padding: '12px 16px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', color: '#fff', fontSize: '16px', outline: 'none' }}
+            />
           </div>
+
           <div>
-            <input name="email" type="email" required placeholder="E-posta" className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-neutral-500" />
+            <label style={{ display: 'block', fontSize: '14px', color: '#a1a1aa', marginBottom: '8px' }}>E-posta</label>
+            <input 
+              name="email"
+              type="email" 
+              required
+              placeholder="ornek@email.com"
+              style={{ width: '100%', padding: '12px 16px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', color: '#fff', fontSize: '16px', outline: 'none' }}
+            />
           </div>
+          
           <div>
-            <input name="password" type="password" required minLength={6} placeholder="Şifre" className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-neutral-500" />
+            <label style={{ display: 'block', fontSize: '14px', color: '#a1a1aa', marginBottom: '8px' }}>Şifre</label>
+            <input 
+              name="password"
+              type="password" 
+              required
+              placeholder="••••••••"
+              style={{ width: '100%', padding: '12px 16px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', color: '#fff', fontSize: '16px', outline: 'none' }}
+            />
           </div>
-          <button disabled={loading} className="w-full py-4 bg-white text-black font-semibold rounded-xl disabled:opacity-50">
+
+          <button 
+            disabled={loading}
+            style={{ width: '100%', padding: '16px', background: '#fff', color: '#0a0a0f', fontWeight: 600, borderRadius: '12px', border: 'none', cursor: 'pointer', opacity: loading ? 0.5 : 1 }}
+          >
             {loading ? "Hesap oluşturuluyor..." : "Hesap Oluştur"}
           </button>
         </form>
 
-        <p className="text-center text-neutral-400 mt-6">
-          Hesabın var mı? <Link href="/giris" className="text-cyan-400">Giriş yap</Link>
+        <p style={{ textAlign: 'center', color: '#a1a1aa', marginTop: '24px' }}>
+          Zaten hesabın var mı? <Link href="/giris" style={{ color: '#22d3ee' }}>Giriş yap</Link>
         </p>
       </div>
     </main>
