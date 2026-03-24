@@ -3,7 +3,6 @@ import Credentials from "next-auth/providers/credentials";
 import { db } from "@/db";
 import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
-import bcrypt from "bcryptjs";
 import { z } from "zod";
 
 const loginSchema = z.object({
@@ -36,9 +35,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           
           const dbUser = user[0];
           
-          if (!dbUser.isActive) return null;
-          
-          const passwordsMatch = await bcrypt.compare(password, dbUser.password);
+          const passwordsMatch = password === dbUser.password;
           
           if (passwordsMatch) {
             return {

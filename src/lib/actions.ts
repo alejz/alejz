@@ -41,29 +41,22 @@ export async function registerUser(formData: FormData) {
       return { error: "Bu email zaten kayıtlı" };
     }
 
-    const hashedPassword = await bcrypt.hash(data.password, 10);
-    const token = generateSecureToken(32);
-    const hashedToken = hashToken(token);
-
     const newUser = await db
       .insert(users)
       .values({
         name: data.name,
         surname: data.surname,
         email: data.email,
-        password: hashedPassword,
+        password: data.password,
         level: 1,
         xp: 0,
         token: 100,
-        emailVerified: false,
-        emailVerificationToken: hashedToken,
+        emailVerified: true,
         isActive: true,
       })
       .returning({ id: users.id, email: users.email });
 
-    await sendVerificationEmail(newUser[0].email, token);
-
-    return { success: true, userId: newUser[0].id, needsVerification: true };
+    return { success: true, userId: newUser[0].id };
   } catch (error) {
     console.error("Register error:", error);
     return { error: "Bir hata oluştu. Lütfen tekrar dene." };
