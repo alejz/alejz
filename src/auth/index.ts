@@ -1,30 +1,26 @@
-import NextAuth from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
+import { cookies } from "next/headers";
 
-const users = [
-  { id: "1", name: "Demo User", email: "demo@demo.com", password: "demo123" }
-];
+const DEMO_USER = { id: "1", name: "Demo User", email: "demo@demo.com", password: "demo123" };
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
-  providers: [
-    CredentialsProvider({
-      name: "Demo",
-      credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" }
-      },
-      async authorize(credentials) {
-        const user = users.find(u => u.email === credentials?.email && u.password === credentials?.password);
-        if (user) return { id: user.id, name: user.name, email: user.email };
-        return null;
-      }
-    })
-  ],
-  pages: {
-    signIn: "/giris",
-  },
-  session: {
-    strategy: "jwt",
-  },
-  secret: "demo-secret-key-change-in-production"
-});
+export async function auth() {
+  const cookieStore = await cookies();
+  const sessionCookie = cookieStore.get("demo-session");
+  
+  if (sessionCookie?.value) {
+    return { user: DEMO_USER };
+  }
+  return null;
+}
+
+export async function signIn(email: string, password: string) {
+  if (email === DEMO_USER.email && password === DEMO_USER.password) {
+    return { success: true, user: DEMO_USER };
+  }
+  return { success: false, error: "E-posta veya şifre hatalı" };
+}
+
+export function signOut() {
+  return { success: true };
+}
+
+export const handlers = { GET: () => Response.json({}), POST: () => Response.json({}) };

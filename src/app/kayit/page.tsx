@@ -1,6 +1,5 @@
 "use client";
 
-import { registerUser } from "@/lib/actions";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -8,27 +7,18 @@ import { useRouter } from "next/navigation";
 export default function Kayit() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    setError("");
-
-    const formData = new FormData(e.currentTarget);
-    
-    const result = await registerUser(formData);
-
-    if (result.error) {
-      setError(result.error);
+    setTimeout(() => {
       setLoading(false);
-    } else {
-      router.push("/giris?registered=true");
-    }
+      router.push("/giris");
+    }, 1000);
   };
 
   return (
-    <main className="min-h-screen bg-[#0a0a0f] text-white flex items-center justify-center px-6 py-12">
+    <main className="min-h-screen bg-[#0a0a0f] text-white flex items-center justify-center px-6">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center gap-2 mb-8">
@@ -45,91 +35,26 @@ export default function Kayit() {
             <span className="text-2xl font-bold">CareerQuest</span>
           </Link>
           <h1 className="text-3xl font-bold mb-2">Hesap Oluştur</h1>
-          <p className="text-neutral-400">Kariyerini dönüştürmeye başla</p>
+          <p className="text-neutral-400">Yolculuğuna başla</p>
         </div>
 
-        {error && (
-          <div className="mb-4 p-3 bg-red-500/10 border border-red-500/50 rounded-lg text-red-400 text-sm text-center">
-            {error}
-          </div>
-        )}
-
         <form className="space-y-4" onSubmit={handleSubmit}>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm text-neutral-400 mb-2">Ad</label>
-              <input 
-                name="name"
-                type="text" 
-                required
-                minLength={2}
-                placeholder="Adın"
-                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-cyan-500 focus:outline-none text-white placeholder:text-neutral-500"
-              />
-            </div>
-            <div>
-              <label className="block text-sm text-neutral-400 mb-2">Soyad</label>
-              <input 
-                name="surname"
-                type="text" 
-                required
-                minLength={2}
-                placeholder="Soyadın"
-                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-cyan-500 focus:outline-none text-white placeholder:text-neutral-500"
-              />
-            </div>
-          </div>
-          
           <div>
-            <label className="block text-sm text-neutral-400 mb-2">E-posta</label>
-            <input 
-              name="email"
-              type="email" 
-              required
-              placeholder="ornek@email.com"
-              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-cyan-500 focus:outline-none text-white placeholder:text-neutral-500"
-            />
+            <input name="name" type="text" required placeholder="İsim" className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-neutral-500" />
           </div>
-
           <div>
-            <label className="block text-sm text-neutral-400 mb-2">Şifre</label>
-            <input 
-              name="password"
-              type="password" 
-              required
-              minLength={8}
-              placeholder="En az 8 karakter"
-              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-cyan-500 focus:outline-none text-white placeholder:text-neutral-500"
-            />
+            <input name="email" type="email" required placeholder="E-posta" className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-neutral-500" />
           </div>
-
           <div>
-            <label className="block text-sm text-neutral-400 mb-2">Şifre Tekrar</label>
-            <input 
-              name="confirmPassword"
-              type="password" 
-              required
-              minLength={8}
-              placeholder="Şifreni tekrar gir"
-              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-cyan-500 focus:outline-none text-white placeholder:text-neutral-500"
-            />
+            <input name="password" type="password" required minLength={6} placeholder="Şifre" className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-neutral-500" />
           </div>
-
-          <label className="flex items-start gap-3 text-sm text-neutral-400">
-            <input type="checkbox" required className="mt-1 w-4 h-4 rounded bg-white/5" />
-            <span>Kullanım şartları ve gizlilik politikasını kabul ediyorum</span>
-          </label>
-
-          <button 
-            disabled={loading}
-            className="w-full py-4 bg-white text-black font-semibold rounded-xl hover:scale-[1.02] transition-transform disabled:opacity-50"
-          >
-            {loading ? "Kayıt yapılıyor..." : "Kayıt Ol"}
+          <button disabled={loading} className="w-full py-4 bg-white text-black font-semibold rounded-xl disabled:opacity-50">
+            {loading ? "Hesap oluşturuluyor..." : "Hesap Oluştur"}
           </button>
         </form>
 
         <p className="text-center text-neutral-400 mt-6">
-          Zaten hesabın var mı? <Link href="/giris" className="text-cyan-400">Giriş yap</Link>
+          Hesabın var mı? <Link href="/giris" className="text-cyan-400">Giriş yap</Link>
         </p>
       </div>
     </main>
