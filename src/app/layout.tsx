@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Outfit, Plus_Jakarta_Sans } from "next/font/google";
-import "./globals.css";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -29,15 +28,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="tr">
-      <head>
-        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="referrer" content="strict-origin-when-cross-origin" />
-        <meta name="x-frame-options" content="DENY" />
-        <meta name="x-content-type-options" content="nosniff" />
-        <meta name="permissions-policy" content="camera=(), microphone=(), geolocation=()" />
-      </head>
       <body
-        className={`${outfit.variable} ${plusJakarta.variable} antialiased`}
+        style={{ background: '#0a0a0f', margin: 0 }}
       >
         {children}
       </body>
