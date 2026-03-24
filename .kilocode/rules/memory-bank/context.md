@@ -23,14 +23,19 @@
 - [x] Dashboard - Rozetler bölümü eklendi
 - [x] Users tablosuna age, profession, bio alanları eklendi (migration)
 - [x] Meslekler ve görevler sistemi:
-  - 30 meslek (Frontend, Backend, UI/UX, SEO, vb.)
-  - 43 görev (learning, practice, homework, quiz tipleri)
-  - Zorluk seviyeleri (kolay, orta, zor, extreme)
+  - 6 meslek (Yazılım Geliştirici, UI/UX Tasarımcı, Dijital Pazarlama, Veri Analisti, Yapay Zeka Mühendisi, İçerik Editörü)
+  - Her meslek için 3-4 görev
+  - Zorluk seviyeleri (Kolay, Orta, Zor, Extreme)
   - XP ve token ödülleri
-- [x] AI değerlendirme sistemi (simulated)
-- [x] /gorevler sayfası - meslek seçimi ve görev listesi
-- [x] /gorevler/[id] - görev detay ve tamamlama
-- [x] Typecheck and lint passes
+- [x] Gerçek kanıt sistemi:
+  - GitHub: API ile repo/kullanıcı doğrulama
+  - Link: URL erişilebilirlik kontrolü
+  - Dosya: Dosya adı/açıklama girişi
+  - Metin: İçerik uzunluk kontrolü (min 50 karakter)
+- [x] AI değerlendirme sistemi (gerçek doğrulama ile)
+- [x] /gorevler sayfası - meslek seçimi, zorluk sekmeleri, görev listesi
+- [x] Görev detay - adım onay kutuları, notlar, kanıt girişi
+- [x] Typecheck geçti
 
 ## Session History
 
